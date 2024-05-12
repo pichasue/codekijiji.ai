@@ -1,14 +1,14 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333333; /* Improved contrast for body text */
-    background-color: #f4f4f4;
+    background-color: #e8f0fe; /* Light blue background for a fresh feel */
     padding: 20px;
     margin: 0;
 }
 
 h1 {
-    color: #444444; /* Improved contrast for headers */
+    color: #2c3e50; /* Dark blue for a modern look */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -28,27 +28,27 @@ li {
 
 a {
     text-decoration: none;
-    color: #0056b3; /* Enhanced link color for better readability */
+    color: #2980b9; /* Brighter blue for links to stand out */
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 a:hover, a:focus {
-    color: #004080; /* Darker shade for hover and focus states to meet contrast ratio */
+    color: #21618c; /* Slightly darker blue for hover and focus states */
     text-decoration: underline;
     outline: none;
 }
 
 /* Adding focus styles for keyboard navigation */
 a:focus {
-    background-color: #e7f1ff; /* Slightly darker background color for focus */
-    outline: 3px solid #004080; /* Darker outline for better visibility */
+    background-color: #d6eaf8; /* Lighter blue background for focus */
+    outline: 3px solid #21618c; /* Darker blue outline for better visibility */
     outline-offset: 2px;
 }
 
 /* Improving the visual hierarchy and layout */
 h1 {
-    font-size: 2em;
+    font-size: 2.5em; /* Slightly larger for a bolder statement */
     margin-bottom: 1em;
 }
 
@@ -67,10 +67,10 @@ li + li {
 
 /* Adjusting link colors within list items for better contrast */
 li a {
-    color: #000000; /* Darker text color for better contrast against white background */
+    color: #2c3e50; /* Darker text color for better contrast against white background */
 }
 
 li a:hover, li a:focus {
     color: #ffffff; /* Light text color for hover and focus states on darker background */
-    background-color: #0056b3; /* Darker background color for hover and focus states to meet contrast ratio */
+    background-color: #2980b9; /* Brighter blue background for hover and focus states */
 }
