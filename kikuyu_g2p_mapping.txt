@@ -1,0 +1,25 @@
+a -> a
+á -> á # high tone
+à -> à # low tone
+e -> e
+é -> é # high tone
+è -> è # low tone
+i -> i
+í -> í # high tone
+ì -> ì # low tone
+o -> o
+ó -> ó # high tone
+ò -> ò # low tone
+u -> u
+ú -> ú # high tone
+ù -> ù # low tone
+p -> p
+t -> t
+k -> k
+m -> m
+n -> n
+ng -> ŋ
+ny -> ɲ
+th -> θ
+ch -> tʃ
+sh -> ʃ
