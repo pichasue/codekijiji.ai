@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333333; /* Improved contrast for body text */
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 0;
+}
+
+h1 {
+    color: #444444; /* Improved contrast for headers */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #ffffff; /* Ensuring high contrast for list items */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    text-decoration: none;
+    color: #0056b3; /* Enhanced link color for better readability */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover, a:focus {
+    color: #004080; /* Darker shade for hover and focus states to meet contrast ratio */
+    text-decoration: underline;
+    outline: none;
+}
+
+/* Adding focus styles for keyboard navigation */
+a:focus {
+    background-color: #e7f1ff; /* Slightly darker background color for focus */
+    outline: 3px solid #004080; /* Darker outline for better visibility */
+    outline-offset: 2px;
+}
+
+/* Improving the visual hierarchy and layout */
+h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+ul {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1em;
+    background: #ffffff; /* Ensuring high contrast for the container */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+li + li {
+    margin-top: 0.5em;
+}
+
+/* Adjusting link colors within list items for better contrast */
+li a {
+    color: #000000; /* Darker text color for better contrast against white background */
+}
+
+li a:hover, li a:focus {
+    color: #ffffff; /* Light text color for hover and focus states on darker background */
+    background-color: #0056b3; /* Darker background color for hover and focus states to meet contrast ratio */
+}
