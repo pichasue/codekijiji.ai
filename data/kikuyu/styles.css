@@ -2,7 +2,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333333; /* Improved contrast for body text */
-    background-color: #e8f0fe; /* Light blue background for a fresh feel */
+    background-color: #f0f8ff; /* Lighter blue background for a fresh feel */
     padding: 20px;
     margin: 0;
 }
@@ -24,6 +24,12 @@ li {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+li:hover {
+    transform: translateY(-3px); /* Slight raise effect on hover */
+    background-color: #2980b9; /* Brighter blue background for hover state */
 }
 
 a {
@@ -34,7 +40,7 @@ a {
 }
 
 a:hover, a:focus {
-    color: #21618c; /* Slightly darker blue for hover and focus states */
+    color: #ffffff; /* White text for hover and focus states */
     text-decoration: underline;
     outline: none;
 }
