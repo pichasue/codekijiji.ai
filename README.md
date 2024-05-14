@@ -1,21 +1,33 @@
-# bibleTTS
+# Gentle
+**Robust yet lenient forced-aligner built on Kaldi. A tool for aligning speech with text.**
 
-- [BibleTTS project website](https://masakhane-io.github.io/bibleTTS/)
-- [Paper](https://arxiv.org/pdf/2207.03546.pdf)
+## Getting Started
 
+There are three ways to install Gentle.
 
-## Links to code
+1. Download the [pre-built Mac application](https://github.com/lowerquality/gentle/releases/latest). This package includes a GUI that will start the server and a browser. It only works on Mac OS.
 
-#### Alignment methodology
+2. Use the [Docker](https://www.docker.com/) image. Just run ```docker run -P lowerquality/gentle```. This works on all platforms supported by Docker.
 
-1. [Segmentation using existing verse timestamps](https://github.com/coqui-ai/open-bible-scripts) (Sec 4.1.1)
-2. [Forced alignment using pre-trained acoustic models](https://github.com/alpoktem/bible2speechDB) (Sec 4.1.2)
-3. [Forced alignment from scratch](https://github.com/coqui-ai/open-bible-scripts) (Sec 4.1.3)
+3. Download the source code and run ```./install.sh```. Then run ```python3 serve.py``` to start the server. This works on Mac and Linux.
 
-#### Outlier detection
+## Using Gentle
 
-- [Data-checker](https://github.com/coqui-ai/data-checker) code for outlier detection (Sec 4.2)
+By default, the aligner listens at http://localhost:8765. That page has a graphical interface for transcribing audio, viewing results, and downloading data.
 
-#### TTS model training
+There is also a REST API so you can use Gentle in your programs. Here's an example of how to use the API with CURL:
 
-- VITS TTS models were trained with [coqui-ai](https://github.com/coqui-ai/TTS) (Sec 5)
+```bash
+curl -F "audio=@audio.mp3" -F "transcript=@words.txt" "http://localhost:8765/transcriptions?async=false"
+```
+
+If you've downloaded the source code you can also run the aligner as a command line program:
+
+```bash
+git clone https://github.com/lowerquality/gentle.git
+cd gentle
+./install.sh
+python3 align.py audio.mp3 words.txt
+```
+
+The default behaviour outputs the JSON to stdout.  See `python3 align.py --help` for options.
