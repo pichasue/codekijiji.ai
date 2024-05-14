@@ -31,3 +31,16 @@ python3 align.py audio.mp3 words.txt
 ```
 
 The default behaviour outputs the JSON to stdout.  See `python3 align.py --help` for options.
+
+## Project Update
+
+As of the latest project developments, we have encountered significant challenges with the alignment of Kikuyu language audio files using Gentle. The alignment process resulted in a high number of unaligned words, which suggests that the tool may not be fully compatible with the phonetic characteristics of the Kikuyu language.
+
+### Next Steps
+
+- **Data Review**: We will conduct a thorough review of the audio files and the corresponding text data to ensure clarity and accuracy.
+- **Tool Configuration**: We will explore the settings and configurations of the Gentle tool to determine if adjustments can improve alignment accuracy.
+- **Expert Consultation**: We will seek advice from linguists or language model experts with experience in the Kikuyu language to gain insights into improving the alignment process.
+- **Alternative Tools**: If necessary, we will explore alternative alignment tools or methods that may be better suited for the Kikuyu language.
+
+The project's progress and any changes to the approach will be documented in subsequent updates to this README.
