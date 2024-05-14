@@ -1,25 +1,25 @@
-a -> a
-á -> á # high tone
-à -> à # low tone
-e -> e
-é -> é # high tone
-è -> è # low tone
-i -> i
-í -> í # high tone
-ì -> ì # low tone
-o -> o
-ó -> ó # high tone
-ò -> ò # low tone
-u -> u
-ú -> ú # high tone
-ù -> ù # low tone
-p -> p
-t -> t
-k -> k
-m -> m
-n -> n
-ng -> ŋ
-ny -> ɲ
-th -> θ
-ch -> tʃ
-sh -> ʃ
+1 a -> a
+2 á -> á # high tone
+3 à -> à # low tone
+4 e -> e
+5 é -> é # high tone
+6 è -> è # low tone
+7 i -> i
+8 í -> í # high tone
+9 ì -> ì # low tone
+10 o -> o
+11 ó -> ó # high tone
+12 ò -> ò # low tone
+13 u -> u
+14 ú -> ú # high tone
+15 ù -> ù # low tone
+16 p -> p
+17 t -> t
+18 k -> k
+19 m -> m
+20 n -> n
+21 ng -> ŋ
+22 ny -> ɲ
+23 th -> θ
+24 ch -> tʃ
+25 sh -> ʃ
