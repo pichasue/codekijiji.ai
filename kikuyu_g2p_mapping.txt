@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 a -> a
 á -> á # high tone
 à -> à # low tone
@@ -23,3 +24,210 @@ ny -> ɲ
 th -> θ
 ch -> tʃ
 sh -> ʃ
+||||||| parent of a6b1b50fa (Update frontend and data processing scripts)
+1 a -> a
+2 á -> á # high tone
+3 à -> à # low tone
+4 e -> e
+5 é -> é # high tone
+6 è -> è # low tone
+7 i -> i
+8 í -> í # high tone
+9 ì -> ì # low tone
+10 o -> o
+11 ó -> ó # high tone
+12 ò -> ò # low tone
+13 u -> u
+14 ú -> ú # high tone
+15 ù -> ù # low tone
+16 p -> p
+17 t -> t
+18 k -> k
+19 m -> m
+20 n -> n
+21 ng -> ŋ
+22 ny -> ɲ
+23 th -> θ
+24 ch -> tʃ
+25 sh -> ʃ
+=======
+1 a -> a
+2 á -> á # high tone
+3 à -> à # low tone
+4 e -> e
+5 é -> é # high tone
+6 è -> è # low tone
+7 i -> i
+8 í -> í # high tone
+9 ì -> ì # low tone
+10 o -> o
+11 ó -> ó # high tone
+12 ò -> ò # low tone
+13 u -> u
+14 ú -> ú # high tone
+15 ù -> ù # low tone
+16 p -> p
+17 t -> t
+18 k -> k
+19 m -> m
+20 n -> n
+21 ng -> ŋ
+22 ny -> ɲ
+23 th -> θ
+24 ch -> tʃ
+25 sh -> ʃ
+26   ->
+27 - -> -
+28 0 -> 0
+29 1 -> 1
+30 3 -> 3
+31 _ -> _
+32 b -> b
+33 c -> c
+34 d -> d
+35 g -> g
+36 h -> h
+37 r -> r
+38 w -> w
+39 y -> y
+40 ĩ -> ĩ
+41 ũ -> ũ
+42 ɛ -> ɛ # mid-low vowel, front
+43 ɔ -> ɔ # mid-low vowel, back
+44 ᵐb -> mb # prenasalized consonant
+45 ⁿd -> nd # prenasalized consonant
+46 ᵑɡ -> ng # prenasalized consonant
+47 ᶮdʒ -> nj # affricate
+48 β -> b # voiced fricative
+49 ð -> th # voiced fricative
+50 ɣ -> g # voiced fricative
+51 ɾ -> r # liquid
+52 j -> y # approximant
+# Additional G2P mappings for OOV words
+53 gen -> ɡɛn
+54 mp -> ɛmp
+55 thĩ -> θĩ
+56 ũcio -> ũtʃio
+57 mũthenya -> mũθɛnja
+58 mũciĩ -> mũtʃĩĩ
+59 kĩa -> kĩa
+60 nake -> nakɛ
+61 maaĩ -> maaĩ
+62 igũrũ -> igũrũ
+63 wa -> wa
+64 gũkĩgĩa -> gũkĩgĩa
+65 atĩ -> atĩ
+66 ũtheri -> ũθɛri
+67 ũrĩa -> ũrĩa
+68 agĩathana -> aɡĩaθana
+69 akiuga -> akiuga
+70 atĩrĩ -> atĩrĩ
+71 mwega -> mwɛɡa
+72 marĩa -> marĩa
+73 ndĩarĩ -> ndĩarĩ
+74 nduma -> nduma
+75 rĩa -> rĩa
+76 kũrĩa -> kũrĩa
+77 wariĩ -> warĩĩ
+78 gũgĩtuĩka -> gũgĩtuĩka
+79 o -> o
+80 ũguo -> ũɡuo
+81 matu -> matu
+82 mairũ -> mairũ
+83 mĩmera -> mĩmɛra
+84 mbeũ -> mbɛũ
+85 akĩhũthĩra -> akĩhũθĩra
+86 nĩombire -> nĩombirɛ
+87 nayo -> najo
+88 nĩkũgĩe -> nĩkũɡĩɛ
+89 akĩona -> akĩona
+90 warĩ -> warĩ
+91 agĩĩta -> aɡĩĩta
+92 hwaĩ-inĩ -> hwaĩ-inĩ
+93 rũciinĩ -> rũtʃiinĩ
+94 ũgĩtuĩka -> ũɡĩtuĩka
+95 nĩ -> nĩ
+96 ũndũ -> ũndũ
+97 marĩ -> marĩ
+98 kũringana -> kũriŋɡana
+99 mĩthemba -> mĩθɛmba
+100 yayo -> jajo
+101 imũrĩ -> imũrĩ
+102 ũrĩ -> ũrĩ
+103 mũthĩa -> mũθĩa
+104 maũndũ -> maũndũ
+105 mothe -> moθɛ
+106 hĩndĩ -> hĩndĩ
+107 ĩyo -> ĩjo
+108 yatariĩ -> jatariĩ
+109 kĩndũ -> kĩndũ
+110 yarĩ -> jarĩ
+111 kũriku -> kũriku
+112 roho -> roho
+113 aareerete -> aarɛɛrɛtɛ
+114 akĩgayũkania -> akĩɡajũkania
+115 ũtukũ -> ũtukũ
+116 maarĩ -> maarĩ
+117 ya -> ja
+118 ningĩ -> ninɡĩ
+119 ĩrĩa -> ĩrĩa
+120 ĩciaraga -> ĩtʃiaraga
+121 mĩtĩ -> mĩtĩ
+122 matunda -> matunda
+123 thĩinĩ -> θĩinĩ
+124 ĩgũciara -> ĩɡũtʃiara
+125 wariĩ-inĩ -> wariĩ-inĩ
+126 cia -> tʃia
+127 ituĩke -> ituĩkɛ
+128 kĩmũrĩ -> kĩmũrĩ
+129 kĩrĩa -> kĩrĩa
+130 ine -> inɛ
+131 ukahithukira -> ukahiθukira
+132 akaona -> akaona
+133 akĩrĩithania -> akĩrĩiθania
+134 kũrĩ -> kũrĩ
+135 akĩambĩrĩria-inĩ -> akĩambĩrĩria-inĩ
+136 akĩmĩĩta -> akĩmĩĩta
+137 mbere -> mbɛrɛ
+138 mũnene -> mũnɛnɛ
+139 gatagatĩ -> ɡataɡatĩ
+140 ka -> ka
+141 ũgayũkanie -> ũɡajũkanie
+142 mangĩ -> manɡĩ
+143 agĩĩkĩra -> aɡĩĩkĩra
+144 rĩaguo -> rĩaɡuo
+145 keerĩ -> kɛɛrĩ
+146 mongane -> monɡanɛ
+147 handũ -> handũ
+148 hamwe -> hamwɛ
+149 kũgĩe -> kũɡĩɛ
+150 nyũmũ -> njũmũ
+151 kũmũ -> kũmũ
+152 namo -> namo
+153 maacookanĩrĩire -> maakookanĩrĩirɛ
+154 akĩmeeta -> akĩmɛɛta
+155 maria -> maria
+156 ĩmere -> ĩmɛrɛ
+157 ĩkĩmera -> ĩkĩmɛra
+158 nakuo -> nakuo
+159 gatatũ -> ɡatatũ
+160 kũgayũkania -> kũɡajũkania
+161 irekwo -> irɛkwo
+162 imenyithania -> imɛnjithania
+163 imera -> imɛra
+164 mĩthenya -> mĩθɛnja
+165 mĩaka -> mĩaka
+166 itũmage -> itũmaɡɛ
+167 kũgĩage -> kũɡĩaɡɛ
+168 igĩrĩ -> iɡĩrĩ
+169 nene -> nɛnɛ
+170 kĩnenanene -> kĩnɛnanɛnɛ
+171 nĩkĩo -> nĩkĩo
+172 riũa -> riũa
+173 kĩarage -> kĩaraɡɛ
+174 nakĩo -> nakĩo
+175 kĩninanini -> kĩninanini
+176 n -> n
+177 kĩambĩrĩria-inĩ -> kĩambĩrĩria-inĩ
+178 ũmwe -> ũmwɛ
+>>>>>>> a6b1b50fa (Update frontend and data processing scripts)

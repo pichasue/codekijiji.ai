@@ -26,8 +26,15 @@ def custom_formatter(file_path, text, **kwargs):
         return None
     # Construct the full file path
     file_path = os.path.join(dataset_path, file_path.strip())
+    # Extract the unique audio name by removing the file extension
+    audio_unique_name = os.path.splitext(os.path.basename(file_path))[0]
     # Construct the dictionary to be returned
-    formatted_dict = {'audio_file': file_path, 'text': text.strip(), 'speaker_name': 'default'}
+    formatted_dict = {
+        'audio_file': file_path,
+        'text': text.strip(),
+        'speaker_name': 'default',
+        'audio_unique_name': audio_unique_name  # Add the unique audio name key
+    }
     # Debug: Log the constructed dictionary before returning
     print(f"Debug: Returning from custom_formatter: {formatted_dict}")
     return formatted_dict

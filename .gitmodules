@@ -1,0 +1,3 @@
+[submodule "Prosodylab-Aligner"]
+	path = Prosodylab-Aligner
+	url = https://github.com/prosodylab/Prosodylab-Aligner.git
