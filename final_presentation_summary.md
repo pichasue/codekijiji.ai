@@ -7,7 +7,7 @@ This presentation summarizes the key components and steps taken to develop and i
 - **Web Application**: Deployed a React web application `tts-frontend` on Netlify, providing a user interface for the TTS system.
 - **AWS Management**: Uploaded Kikuyu language MP3 files to the S3 bucket `codekijiji-ai-kikuyu-tts-data` for model training.
 - **Docker Configuration**: Set up a Docker container with essential tools like Miniconda, MFA, Pynini, TensorFlow, HTK, and HDecode for TTS processing.
-- **Backend Connectivity**: Updated `KikuyuTTSComponent.js` to connect with the backend service endpoint for TTS processing.
+- **Backend Connectivity**: Updated `KikuyuTTSComponent.js` to connect with the backend service endpoint for TTS processing and to handle binary audio data by converting the response to a blob and creating a local URL for the audio element.
 - **Nginx Configuration**: Configured an Nginx server to serve the Flask application over HTTPS, ensuring secure communication.
 
 ## Steps Taken
@@ -28,6 +28,7 @@ This presentation summarizes the key components and steps taken to develop and i
 - **Flask Application**: Ensured the Flask application was accessible and running on the correct port within the Docker container.
 - **System Testing**: Conducted thorough testing of the TTS system, including the `/api/tts` endpoint, to validate the integration.
 - **Git Management**: Made frequent commits to track changes and maintain a clear history of the project's development.
+- **Frontend Audio Handling**: Implemented a fix in the frontend code to correctly handle binary audio data from the backend, ensuring the audio is playable after text-to-speech conversion.
 
 ## Conclusion
 The Kikuyu TTS system integration project successfully combined web development, cloud management, containerization, and data processing to create a functional TTS system. The system is now ready for final review and demonstration.
