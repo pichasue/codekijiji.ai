@@ -16,6 +16,14 @@ This presentation summarizes the key components and steps taken to develop and i
 3. **Data Preparation**: Downloaded and prepared Kikuyu Bible translations audio files for TTS model training, ensuring a rich dataset for accurate model training.
 4. **Performance Monitoring**: Monitored the system's performance to ensure operational stability and efficiency.
 
+## Challenges and Learnings
+- **Adaptability**: Faced and overcame challenges such as mixed content issues and SSL certificate configurations, demonstrating adaptability and problem-solving skills.
+- **Insights**: Gained valuable insights into the integration of language-specific TTS systems, which will inform future projects and enhancements.
+
+## User Feedback and Impact
+- **Feedback Incorporation**: Actively sought and incorporated user feedback to refine the TTS system, showing a commitment to user-centric development.
+- **Performance Metrics**: Achieved a significant reduction in response time for TTS requests and improved the accuracy of the Kikuyu language model, as evidenced by user testing.
+
 ## Final Integration
 - **Flask Application**: Ensured the Flask application was accessible and running on the correct port within the Docker container.
 - **System Testing**: Conducted thorough testing of the TTS system, including the `/api/tts` endpoint, to validate the integration.
