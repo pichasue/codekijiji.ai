@@ -155,19 +155,9 @@ def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
         return style_wav  # style_wav is a gst dictionary with {token1_id : token1_weigth, ...}
     return None
 
-
 @app.route("/")
 def index():
-    return render_template(
-        "index.html",
-        show_details=args.show_details,
-        use_multi_speaker=use_multi_speaker,
-        use_multi_language=use_multi_language,
-        speaker_ids=speaker_manager.name_to_id if speaker_manager is not None else None,
-        language_ids=language_manager.name_to_id if language_manager is not None else None,
-        use_gst=use_gst,
-    )
-
+    return "TTS Service is running", 200
 
 @app.route("/details")
 def details():
@@ -203,6 +193,7 @@ def tts():
     with lock:
         try:
             data = request.get_json(silent=True)
+            logging.info(f"Received data: {data}")
             if not data or 'text' not in data or not data['text']:
                 raise ValueError("The 'text' parameter is required for synthesis and was not provided in the request.")
             text = data['text']
@@ -210,13 +201,15 @@ def tts():
             language_idx = request.headers.get("language-id") or request.values.get("language_id", "")
             style_wav = request.headers.get("style-wav") or request.values.get("style_wav", "")
             style_wav = style_wav_uri_to_dict(style_wav)
-
             logging.info(f" > Model input: {text}")
             logging.info(f" > Speaker Idx: {speaker_idx}")
             logging.info(f" > Language Idx: {language_idx}")
+            logging.info(f" > Style Wav: {style_wav}")
             wavs = synthesizer.tts(text, speaker_name=speaker_idx, language_name=language_idx, style_wav=style_wav)
+            logging.info("Synthesis process completed successfully.")
             out = io.BytesIO()
             synthesizer.save_wav(wavs, out)
+            logging.info("Audio file created successfully.")
             return send_file(out, mimetype="audio/wav")
         except Exception as e:
             logging.error(f"An error occurred: {e}")
@@ -274,13 +267,5 @@ def ping():
     return "pong", 200
 
 
-def main():
-    from ssl import SSLContext, PROTOCOL_TLS, CERT_NONE
-    context = SSLContext(PROTOCOL_TLS)
-    context.load_cert_chain('/etc/ssl/certs/nginx-selfsigned.crt', '/etc/ssl/private/nginx-selfsigned.key')
-    context.set_ciphers('ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:AES128-SHA')
-    app.run(debug=args.debug, host="0.0.0.0", port=args.port, ssl_context=context)
-
-
 if __name__ == "__main__":
-    main()
+    app.run(debug=args.debug, host="0.0.0.0", port=args.port)
