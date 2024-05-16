@@ -10,6 +10,7 @@ from typing import Union
 from urllib.parse import parse_qs
 
 from flask import Flask, render_template, render_template_string, request, send_file
+from flask_cors import CORS
 
 from TTS.config import load_config
 from TTS.utils.manage import ModelManager
@@ -126,7 +127,15 @@ language_manager = getattr(synthesizer.tts_model, "language_manager", None)
 # TODO: set this from SpeakerManager
 use_gst = synthesizer.tts_config.get("use_gst", False)
 app = Flask(__name__)
+CORS(app)
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
 
 def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
     """Transform an uri style_wav, in either a string (path to wav file to be use for style transfer)
@@ -203,7 +212,8 @@ def tts():
         wavs = synthesizer.tts(text, speaker_name=speaker_idx, language_name=language_idx, style_wav=style_wav)
         out = io.BytesIO()
         synthesizer.save_wav(wavs, out)
-    return send_file(out, mimetype="audio/wav")
+        response = send_file(out, mimetype="audio/wav")
+        return response
 
 
 # Basic MaryTTS compatibility layer
@@ -249,9 +259,19 @@ def mary_tts_api_process():
         synthesizer.save_wav(wavs, out)
     return send_file(out, mimetype="audio/wav")
 
+@app.route("/ping", methods=["GET"])
+def ping():
+    """Health check endpoint."""
+    return "pong", 200
 
 def main():
-    app.run(debug=args.debug, host="::", port=args.port)
+    from ssl import SSLContext, PROTOCOL_TLS_SERVER
+    context = SSLContext(PROTOCOL_TLS_SERVER)
+    context.load_cert_chain('/app/server.crt', '/app/server.key')
+    app.run(debug=args.debug, host="0.0.0.0", port=args.port, ssl_context=context)
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":

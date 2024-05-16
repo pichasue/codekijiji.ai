@@ -275,7 +275,11 @@ def ping():
 
 
 def main():
-    app.run(debug=args.debug, host="::", port=args.port)
+    from ssl import SSLContext, PROTOCOL_TLS, CERT_NONE
+    context = SSLContext(PROTOCOL_TLS)
+    context.load_cert_chain('/etc/ssl/certs/nginx-selfsigned.crt', '/etc/ssl/private/nginx-selfsigned.key')
+    context.set_ciphers('ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-CHACHA20-POLY1305:AES128-SHA')
+    app.run(debug=args.debug, host="0.0.0.0", port=args.port, ssl_context=context)
 
 
 if __name__ == "__main__":

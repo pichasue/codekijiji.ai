@@ -170,3 +170,7 @@ depot/*
 coqui_recipes/*
 local_scripts/*
 coqui_demos/*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -14,7 +14,11 @@ WORKDIR /app
 COPY . /app
 
 # Copy the .models.json file to the root directory
-COPY TTS/.models.json /.models.json
+COPY .models.json /.models.json
+
+# Copy SSL certificates
+COPY server.crt /app
+COPY server.key /app
 
 RUN make install
 
