@@ -16,12 +16,7 @@ COPY . /app
 # Copy the .models.json file to the root directory
 COPY .models.json /.models.json
 
-# Copy SSL certificates
-COPY server.crt /app
-COPY server.key /app
-
 RUN make install
 
-# Set the entry point to the Flask application
-ENTRYPOINT ["python3"]
-CMD ["/app/server.py"]
+# Set the entry point to the Flask application using Gunicorn
+ENTRYPOINT ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "server:app"]

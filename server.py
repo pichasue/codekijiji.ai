@@ -9,13 +9,16 @@ from threading import Lock
 from typing import Union
 from urllib.parse import parse_qs
 
+from functools import lru_cache
 from flask import Flask, render_template, render_template_string, request, send_file
+from flask_cors import CORS
 
 from TTS.config import load_config
 from TTS.utils.manage import ModelManager
 from TTS.utils.synthesizer import Synthesizer
 import logging
 import traceback
+import time
 
 def create_argparser():
     def convert_boolean(x):
@@ -54,7 +57,7 @@ def create_argparser():
     )
     parser.add_argument("--vocoder_config_path", type=str, help="Path to vocoder model config file.", default=None)
     parser.add_argument("--speakers_file_path", type=str, help="JSON file for multi-speaker model.", default=None)
-    parser.add_argument("--port", type=int, default=5002, help="port to listen on.")
+    parser.add_argument("--port", type=int, default=5000, help="port to listen on.")
     parser.add_argument("--use_cuda", type=convert_boolean, default=False, help="true to use CUDA.")
     parser.add_argument("--debug", type=convert_boolean, default=False, help="true to enable Flask debug mode.")
     parser.add_argument("--show_details", type=convert_boolean, default=False, help="Generate model detail page.")
@@ -127,15 +130,17 @@ language_manager = getattr(synthesizer.tts_model, "language_manager", None)
 # TODO: set this from SpeakerManager
 use_gst = synthesizer.tts_config.get("use_gst", False)
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Set up logging configuration to file and console
 log_formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
-log_file_handler = logging.FileHandler('/var/log/tts_service.log')
+log_file_handler = logging.FileHandler('/var/log/tts/tts_service.log')
 log_file_handler.setFormatter(log_formatter)
 log_console_handler = logging.StreamHandler()
 log_console_handler.setFormatter(log_formatter)
 logging.basicConfig(handlers=[log_file_handler, log_console_handler], level=logging.INFO)
 logging.info('Logging system initialized.')
+logging.info('Test log entry: Logging system operational.')
 
 def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
     """Transform an uri style_wav, in either a string (path to wav file to be use for style transfer)
@@ -187,15 +192,35 @@ def details():
 lock = Lock()
 
 
-@app.route("/api/tts", methods=["GET", "POST"])
+@app.route("/api/tts", methods=["GET", "POST", "HEAD"])
 def tts():
+    start_time = time.time()  # Start timing the request processing
     logging.info('Entered the tts() function.')
-    with lock:
-        try:
+    # Check if the model is thread-safe before using the lock
+    if not synthesizer.tts_model.is_thread_safe:
+        with lock:
+            return process_tts_request()
+    else:
+        return process_tts_request()
+
+from functools import lru_cache
+import json
+
+@lru_cache(maxsize=32)
+def process_tts_request():
+    try:
+        # HEAD requests do not have a body, skip processing
+        if request.method == "HEAD":
+            return '', 200
+
+        # Only process 'text' parameter for POST requests
+        if request.method == "POST":
             data = request.get_json(silent=True)
             logging.info(f"Received data: {data}")
             if not data or 'text' not in data or not data['text']:
-                raise ValueError("The 'text' parameter is required for synthesis and was not provided in the request.")
+                error_message = "The 'text' parameter is required for synthesis and was not provided in the request."
+                logging.error(error_message)
+                return {"error": error_message}, 400
             text = data['text']
             speaker_idx = request.headers.get("speaker-id") or request.values.get("speaker_id", "")
             language_idx = request.headers.get("language-id") or request.values.get("language_id", "")
@@ -205,16 +230,22 @@ def tts():
             logging.info(f" > Speaker Idx: {speaker_idx}")
             logging.info(f" > Language Idx: {language_idx}")
             logging.info(f" > Style Wav: {style_wav}")
-            wavs = synthesizer.tts(text, speaker_name=speaker_idx, language_name=language_idx, style_wav=style_wav)
+            # Convert parameters to a hashable form for caching
+            cache_key = (text, speaker_idx, language_idx, json.dumps(style_wav, sort_keys=True))
+            wavs = synthesizer.tts(*cache_key)
             logging.info("Synthesis process completed successfully.")
             out = io.BytesIO()
             synthesizer.save_wav(wavs, out)
             logging.info("Audio file created successfully.")
+            end_time = time.time()  # End timing the request processing
+            logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
             return send_file(out, mimetype="audio/wav")
-        except Exception as e:
-            logging.error(f"An error occurred: {e}")
-            logging.error(traceback.format_exc())
-            return {"error": str(e)}, 500
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        logging.error(traceback.format_exc())
+        end_time = time.time()  # End timing the request processing even in case of an error
+        logging.info(f"Processed tts request with error in {end_time - start_time:.2f} seconds.")  # Log the processing time
+        return {"error": str(e)}, 500
 
 
 # Basic MaryTTS compatibility layer
@@ -266,6 +297,13 @@ def ping():
     """Health check endpoint for ELB."""
     return "pong", 200
 
+@app.after_request
+def after_request(response):
+    """Add CORS headers to the response."""
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
 
 if __name__ == "__main__":
     app.run(debug=args.debug, host="0.0.0.0", port=args.port)
