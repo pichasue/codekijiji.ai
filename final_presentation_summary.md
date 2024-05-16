@@ -31,7 +31,7 @@ This presentation summarizes the key components and steps taken to develop and i
 - **Frontend Audio Handling**: Implemented a fix in the frontend code to correctly handle binary audio data from the backend, ensuring the audio is playable after text-to-speech conversion.
 
 ## SSL Configuration and Cloud Deployment
-- **SSL Challenges**: Encountered SSL protocol errors due to self-signed certificates, which led to a decision to move the backend service to a cloud provider with managed SSL certificates.
+- **SSL Challenges**: Encountered SSL protocol errors due to self-signed certificates, which led to a decision to move the backend service to a cloud provider with managed SSL certificates. The SSL configuration issue is being addressed, with plans to deploy the backend to a cloud provider that offers managed SSL certificates to ensure secure and reliable service availability.
 - **Cloud Provider Selection**: Awaiting user input on the choice of cloud provider or existing infrastructure to use for deploying the backend service with a managed SSL certificate.
 - **Deployment Plan**: Preparing to update the backend deployment to ensure secure and reliable service availability for the official launch.
 
@@ -39,6 +39,7 @@ This presentation summarizes the key components and steps taken to develop and i
 The Kikuyu TTS system integration project successfully combined web development, cloud management, containerization, and data processing to create a functional TTS system. The system is now ready for final review and demonstration.
 
 ## Next Steps
+- Resolve the GitHub token permissions issue to enable repository access and operations.
 - Review the final presentation with stakeholders.
 - Gather feedback and make any necessary adjustments.
 - Prepare for the official launch of the TTS system.
