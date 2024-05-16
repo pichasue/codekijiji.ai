@@ -268,6 +268,12 @@ def mary_tts_api_process():
     return send_file(out, mimetype="audio/wav")
 
 
+@app.route("/ping", methods=["GET"])
+def ping():
+    """Health check endpoint for ELB."""
+    return "pong", 200
+
+
 def main():
     app.run(debug=args.debug, host="::", port=args.port)
 
