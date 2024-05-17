@@ -154,15 +154,7 @@ def tts():
     logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
     return response
 
-# Removed redundant lru_cache decorators
-@app.route("/api/tts", methods=["GET", "POST", "HEAD"])
-def tts():
-    start_time = time.time()  # Start timing the request processing
-    logging.info('Entered the tts() function.')
-    response = process_tts_request()
-    end_time = time.time()  # End timing the request processing
-    logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
-    return response
+# Duplicate definition of the tts function removed for clarity and to prevent routing conflicts.
 
 def process_tts_request():
     profiler = cProfile.Profile()
