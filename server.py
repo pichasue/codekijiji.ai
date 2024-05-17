@@ -195,7 +195,14 @@ lock = Lock()
 def tts():
     start_time = time.time()  # Start timing the request processing
     logging.info('Entered the tts() function.')
-    return process_tts_request()
+    response = process_tts_request()
+    # Add CORS headers directly to the response
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'OPTIONS, POST'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    end_time = time.time()  # End timing the request processing
+    logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
+    return response
 
 from functools import lru_cache
 import json
