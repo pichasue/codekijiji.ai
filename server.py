@@ -200,6 +200,10 @@ def tts():
 from functools import lru_cache
 import json
 
+# TODO: Review the maxsize parameter of lru_cache based on usage patterns for optimization.
+from functools import lru_cache
+import json
+
 @lru_cache(maxsize=32)
 def process_tts_request():
     try:
