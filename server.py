@@ -138,9 +138,8 @@ log_file_handler = logging.FileHandler('/var/log/tts/tts_service.log')
 log_file_handler.setFormatter(log_formatter)
 log_console_handler = logging.StreamHandler()
 log_console_handler.setFormatter(log_formatter)
-logging.basicConfig(handlers=[log_file_handler, log_console_handler], level=logging.INFO)
-logging.info('Logging system initialized.')
-logging.info('Test log entry: Logging system operational.')
+logging.basicConfig(handlers=[log_file_handler, log_console_handler], level=logging.WARNING)
+logging.warning('Logging system initialized at WARNING level.')
 
 def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
     """Transform an uri style_wav, in either a string (path to wav file to be use for style transfer)
@@ -196,12 +195,7 @@ lock = Lock()
 def tts():
     start_time = time.time()  # Start timing the request processing
     logging.info('Entered the tts() function.')
-    # Check if the model is thread-safe before using the lock
-    if not synthesizer.tts_model.is_thread_safe:
-        with lock:
-            return process_tts_request()
-    else:
-        return process_tts_request()
+    return process_tts_request()
 
 from functools import lru_cache
 import json
