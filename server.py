@@ -84,7 +84,7 @@ language_manager = getattr(synthesizer.tts_model, "language_manager", None)
 # TODO: set this from SpeakerManager
 use_gst = synthesizer.tts_config.get("use_gst", False)
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, origins=["https://clever-youtiao-1fec37.netlify.app"])
 
 # Set up logging configuration to file and console
 log_formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
@@ -150,53 +150,71 @@ def tts():
     start_time = time.time()  # Start timing the request processing
     logging.info('Entered the tts() function.')
     response = process_tts_request()
-    # Add CORS headers directly to the response
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'OPTIONS, POST'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     end_time = time.time()  # End timing the request processing
     logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
     return response
 
-@lru_cache(maxsize=32)
+# Removed redundant lru_cache decorators
+@app.route("/api/tts", methods=["GET", "POST", "HEAD"])
+def tts():
+    start_time = time.time()  # Start timing the request processing
+    logging.info('Entered the tts() function.')
+    response = process_tts_request()
+    end_time = time.time()  # End timing the request processing
+    logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
+    return response
+
 def process_tts_request():
     profiler = cProfile.Profile()
     try:
         # HEAD requests do not have a body, skip processing
         if request.method == "HEAD":
-            return '', 200
+            response = make_response('', 200)
+        else:
+            # Only process 'text' parameter for POST requests
+            if request.method == "POST":
+                data = request.get_json(silent=True)
+                logging.info(f"Received data: {data}")
+                if not data:
+                    error_message = "No data provided in the request."
+                    logging.error(error_message)
+                    response = make_response({"error": error_message}, 400)
+                elif 'text' not in data:
+                    error_message = "The 'text' parameter is missing from the request."
+                    logging.error(error_message)
+                    response = make_response({"error": error_message}, 400)
+                elif not data['text']:
+                    error_message = "The 'text' parameter is empty."
+                    logging.error(error_message)
+                    response = make_response({"error": error_message}, 400)
+                else:
+                    text = data['text']
+                    speaker_idx = request.headers.get("speaker-id") or request.values.get("speaker_id", "")
+                    language_idx = request.headers.get("language-id") or request.values.get("language_id", "")
+                    logging.info(f" > Model input: {text}")
+                    logging.info(f" > Speaker Idx: {speaker_idx}")
+                    logging.info(f" > Language Idx: {language_idx}")
+                    style_wav = request.headers.get("style-wav") or request.values.get("style_wav", "")
+                    style_wav = style_wav_uri_to_dict(style_wav)
+                    logging.info(f" > Style Wav: {style_wav}")
 
-        # Only process 'text' parameter for POST requests
-        if request.method == "POST":
-            data = request.get_json(silent=True)
-            logging.info(f"Received data: {data}")
-            if not data or 'text' not in data or not data['text']:
-                error_message = "The 'text' parameter is required for synthesis and was not provided in the request."
-                logging.error(error_message)
-                return {"error": error_message}, 400
-            text = data['text']
-            speaker_idx = request.headers.get("speaker-id") or request.values.get("speaker_id", "")
-            language_idx = request.headers.get("language-id") or request.values.get("language_id", "")
-            logging.info(f" > Model input: {text}")
-            logging.info(f" > Speaker Idx: {speaker_idx}")
-            logging.info(f" > Language Idx: {language_idx}")
-            style_wav = request.headers.get("style-wav") or request.values.get("style_wav", "")
-            style_wav = style_wav_uri_to_dict(style_wav)
-            logging.info(f" > Style Wav: {style_wav}")
-
-            # Profile the synthesizer.tts function call
-            profiler.enable()
-            wavs = synthesizer.tts(text, speaker_idx, language_idx, style_wav)
-            profiler.disable()
-            out = io.BytesIO()
-            synthesizer.save_wav(wavs, out)
-            profiler.dump_stats('/home/ubuntu/TTS/tts_profile.prof')  # Save profiling data to file
-            logging.info("Synthesis process completed successfully.")
-            return send_file(out, mimetype="audio/wav")
+                    # Profile the synthesizer.tts function call
+                    profiler.enable()
+                    wavs = synthesizer.tts(text, speaker_idx, language_idx, style_wav)
+                    profiler.disable()
+                    out = io.BytesIO()
+                    synthesizer.save_wav(wavs, out)
+                    profiler.dump_stats('/home/ubuntu/TTS/tts_profile.prof')  # Save profiling data to file
+                    logging.info("Synthesis process completed successfully.")
+                    response = make_response(send_file(out, mimetype="audio/wav"))
+        # Removed manual CORS headers as they are now set in the after_request function
+        return response
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         logging.error(traceback.format_exc())
-        return {"error": str(e)}, 500
+        response = make_response({"error": str(e)}, 500)
+        # Removed manual CORS headers as they are now set in the after_request function
+        return response
 
 
 # Basic MaryTTS compatibility layer
@@ -250,10 +268,13 @@ def ping():
 
 @app.after_request
 def after_request(response):
-    """Add CORS headers to the response."""
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    """Post-processing of the response to include CORS headers."""
+    response.headers.add('Access-Control-Allow-Origin', 'https://clever-youtiao-1fec37.netlify.app')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    # Log the CORS headers for debugging purposes
+    logging.info(f"CORS headers set: {response.headers}")
     return response
 
 if __name__ == "__main__":
