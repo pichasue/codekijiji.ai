@@ -199,13 +199,13 @@ def process_tts_request():
                     profiler.dump_stats('/home/ubuntu/TTS/tts_profile.prof')  # Save profiling data to file
                     logging.info("Synthesis process completed successfully.")
                     response = make_response(send_file(out, mimetype="audio/wav"))
-        # Removed manual CORS headers as they are now set in the after_request function
+        # Removed explicit CORS headers to centralize CORS management in the after_request function
         return response
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         logging.error(traceback.format_exc())
         response = make_response({"error": str(e)}, 500)
-        # Removed manual CORS headers as they are now set in the after_request function
+        # Removed explicit CORS headers to centralize CORS management in the after_request function
         return response
 
 
