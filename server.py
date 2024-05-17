@@ -67,7 +67,7 @@ def create_argparser():
 # parse the args
 args = create_argparser().parse_args()
 
-path = Path(__file__).parent / "../.models.json"
+path = Path(__file__).parent / ".models.json"
 manager = ModelManager(path)
 
 if args.list_models:
