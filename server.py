@@ -152,6 +152,8 @@ def tts():
     response = process_tts_request()
     end_time = time.time()  # End timing the request processing
     logging.info(f"Processed tts request in {end_time - start_time:.2f} seconds.")  # Log the processing time
+    # Log the response for debugging purposes
+    logging.info(f"Response headers: {response.headers}")
     return response
 
 # Duplicate definition of the tts function removed for clarity and to prevent routing conflicts.
@@ -261,12 +263,17 @@ def ping():
 @app.after_request
 def after_request(response):
     """Post-processing of the response to include CORS headers."""
-    response.headers.add('Access-Control-Allow-Origin', 'https://clever-youtiao-1fec37.netlify.app')
+    response.headers.add('Access-Control-Allow-Origin', 'http://ornate-naiad-f741a5.netlify.app')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     response.headers.add('Access-Control-Allow-Credentials', 'true')
     # Log the CORS headers for debugging purposes
     logging.info(f"CORS headers set: {response.headers}")
+    # Additional logging to confirm headers are being set
+    if 'Access-Control-Allow-Origin' in response.headers:
+        logging.info("Access-Control-Allow-Origin header is set.")
+    else:
+        logging.error("Access-Control-Allow-Origin header is NOT set.")
     return response
 
 if __name__ == "__main__":
