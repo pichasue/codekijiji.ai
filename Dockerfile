@@ -7,6 +7,8 @@ RUN pip3 install llvmlite --ignore-installed
 
 # Install Dependencies:
 RUN pip3 install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
+RUN pip3 install gunicorn
+RUN pip3 install flask_cors  # Install flask_cors module
 RUN rm -rf /root/.cache/pip
 
 # Copy TTS repository contents:
