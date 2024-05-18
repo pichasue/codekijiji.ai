@@ -24,7 +24,6 @@ const KikuyuTTSComponent = () => {
     }
 
     setIsLoading(true);
-    // Update the backend TTS service endpoint URL to the correct one
     const ttsServiceUrl = 'https://mediavestpr.co.ke/api/tts';
     try {
       const response = await fetch(ttsServiceUrl, {
@@ -37,10 +36,16 @@ const KikuyuTTSComponent = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      // Handle binary audio data response
       const blob = await response.blob();
       const audioUrl = URL.createObjectURL(blob);
       setAudioUrl(audioUrl);
+      toast({
+        title: 'Success',
+        description: 'Speech generated successfully',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error('Error submitting text for TTS processing:', error);
       toast({
@@ -58,7 +63,6 @@ const KikuyuTTSComponent = () => {
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = audioUrl;
-    // Change the file extension to .wav to match the audio format
     link.download = 'kikuyu_tts_output.wav';
     document.body.appendChild(link);
     link.click();
