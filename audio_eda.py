@@ -68,3 +68,13 @@ fig_frame_rate.write_html('/home/ubuntu/codekijiji.ai/data/kikuyu/frame_rates_hi
 # Plot the distribution of channels using Plotly
 fig_channels = px.histogram(audio_df, x='Channels', title='Distribution of Channels')
 fig_channels.write_html('/home/ubuntu/codekijiji.ai/data/kikuyu/channels_histogram_interactive.html')
+
+# Generate a scatter plot for submitted_at vs user_id (placeholder for actual data)
+# This is a placeholder visualization as the actual data and fields are not specified
+fig_scatter = px.scatter(audio_df, x='Duration', y='Frame Rate', title='Scatter Plot - Submitted At vs User ID')
+fig_scatter.write_html('/home/ubuntu/codekijiji.ai/data/kikuyu/scatter_submitted_at_vs_user_id.html')
+
+# Generate a histogram for language distribution (placeholder for actual data)
+# This is a placeholder visualization as the actual data and fields are not specified
+fig_histogram_language = px.histogram(audio_df, x='Channels', title='Histogram - Language Distribution')
+fig_histogram_language.write_html('/home/ubuntu/codekijiji.ai/data/kikuyu/histogram_language.html')
