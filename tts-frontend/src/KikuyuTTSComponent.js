@@ -24,6 +24,7 @@ const KikuyuTTSComponent = () => {
     }
 
     setIsLoading(true);
+    // Update the ttsServiceUrl to point to the correct backend URL
     const ttsServiceUrl = 'https://mediavestpr.co.ke/api/tts';
     try {
       const response = await fetch(ttsServiceUrl, {
